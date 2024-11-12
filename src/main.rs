@@ -12,8 +12,14 @@ fn main() ->anyhow::Result<()> {
     println!("{:?}", ops);
     match ops.cmd {
         Subcommands::Cvs(opts) => {
-            process_csv(&opts.input, &opts.output)?;
+            let output = if let Some(output) = opts.output {
+                output.clone()
+            } else {
+                "output.json".into()
+            };
+            process_csv(&opts.input, output , opts.format)?;
         }
     }
     Ok(())
 }
+// 37
